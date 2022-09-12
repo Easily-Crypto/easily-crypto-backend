@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "address",
     "transactions",
     "wallets",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -154,3 +155,15 @@ if DATABASE_URL:
     )
     DATABASES["default"].update(db_from_env)
     DEBUG = False
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Easily Crypto API",
+    "DESCRIPTION": "Your project description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+}
