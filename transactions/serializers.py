@@ -9,13 +9,12 @@ class AssetNotExistError(Exception):
 
 
 class TransactionsSerializer(serializers.ModelSerializer):
+    total_value = serializers.SerializerMethodField()
     class Meta:
         model = Transaction
         fields = "__all__"
 
         read_only_fields = ["quotation", "total_value", "transaction_date_time"]
-
-    total_value = serializers.SerializerMethodField()
 
     def get_total_value(self, obj):
 
