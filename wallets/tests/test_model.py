@@ -23,7 +23,7 @@ class WalletModelTest(TestCase):
         }
         cls.my_wallet = Wallet.objects.create(**cls.wallet, user=cls.person)
 
-    def test_product_has_information_fields(self):
+    def test_wallet_has_information_fields(self):
         self.assertEqual(self.my_wallet.name, self.wallet["name"])
         self.assertEqual(self.my_wallet.asset_ticket, self.wallet["asset_ticket"])
         self.assertEqual(self.my_wallet.person, self.person)
