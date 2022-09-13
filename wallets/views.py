@@ -26,25 +26,26 @@ class WalletView(generics.ListCreateAPIView):
 
 
 class SubTotalWalletView(APIView):
-    def get(self, req: Request, wallet_id) -> Response:
+    ...
+#     def get(self, req: Request, wallet_id) -> Response:
 
-        wallet = get_object_or_404(Wallet, pk=wallet_id)
-        serialized = WalletSerializer(wallet)
+#         wallet = get_object_or_404(Wallet, pk=wallet_id)
+#         serialized = WalletSerializer(wallet)
 
-        quantity = sum(
-            [float(item["quantity"]) for item in serialized.data["transactions"]]
-        )
+#         quantity = sum(
+#             [float(item["quantity"]) for item in serialized.data["transactions"]]
+#         )
 
-        crypto_quotation = float(
-            DataCrypto.get(crypto=wallet.asset_ticket)["price_actual"]
-        )
+#         crypto_quotation = float(
+#             DataCrypto.get(crypto=wallet.asset_ticket)["price_actual"]
+#         )
 
-        data = {"value": quantity * crypto_quotation}
+#         data = {"value": quantity * crypto_quotation}
 
-        sub_total_serialized = WalletSerializer(wallet, data=data, partial=True)
+#         sub_total_serialized = WalletSerializer(wallet, data=data, partial=True)
 
-        sub_total_serialized.is_valid(raise_exception=True)
+#         sub_total_serialized.is_valid(raise_exception=True)
 
-        sub_total_serialized.save()
+#         sub_total_serialized.save()
 
-        return Response(sub_total_serialized.data, status.HTTP_200_OK)
+#         return Response(sub_total_serialized.data, status.HTTP_200_OK)

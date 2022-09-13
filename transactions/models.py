@@ -17,6 +17,7 @@ class Transaction(models.Model):
     exchange = models.CharField(max_length=50, choices=Exchange.choices)
     quotation = models.DecimalField(max_digits=20, decimal_places=8)
     transaction_date_time = models.DateTimeField(auto_now=True)
+    
     wallets = models.ForeignKey(
         "wallets.Wallet", on_delete=models.CASCADE, related_name="transactions"
     )
