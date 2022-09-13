@@ -11,7 +11,7 @@ from .permissions import IsOwnerWallet
 from .serializers import TransactionsSerializer
 
 
-class ListCreateTransactionView(generics.ListCreateAPIView):
+class ListCreateTransactionView(generics.CreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = TransactionsSerializer
