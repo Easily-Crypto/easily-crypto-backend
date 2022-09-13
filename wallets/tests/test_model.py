@@ -6,7 +6,7 @@ from wallets.models import Wallet
 class WalletModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = {
+        cls.user_data = {
             "username": "testando",
             "email": "teste@mail.com",
             "password": "1234",
@@ -15,20 +15,20 @@ class WalletModelTest(TestCase):
             "last_name": "da Silva",
             "cpf": "856.135.217-51",
         }
-        cls.person = User.objects.create_user(**cls.user)
+        cls.user = User.objects.create_user(**cls.user_data)
 
-        cls.wallet = {
+        cls.wallet_data = {
             "name": "testecoin",
-            "asset_ticket": "TST",
+            "asset_ticket": "BTC",
         }
-        cls.my_wallet = Wallet.objects.create(**cls.wallet, user=cls.person)
+        cls.wallet = Wallet.objects.create(**cls.wallet_data, user=cls.user)
 
     def test_wallet_has_information_fields(self):
-        self.assertEqual(self.my_wallet.name, self.wallet["name"])
-        self.assertEqual(self.my_wallet.asset_ticket, self.wallet["asset_ticket"])
-        self.assertEqual(self.my_wallet.person, self.person)
+        self.assertEqual(self.wallet.name, self.wallet_data["name"])
+        self.assertEqual(self.wallet.asset_ticket, self.wallet_data["asset_ticket"])
+        self.assertEqual(self.wallet.user, self.user)
         
     def test_wallet_with_user_relationship_made(self):
-        self.my_wallet.user_id = self.person.id
-        self.my_wallet.save()
-        self.assertIs(self.person.id, self.my_wallet.user_id)
+        self.wallet.user_id = self.user.id
+        self.wallet.save()
+        self.assertIs(self.user.id, self.wallet.user_id)

@@ -7,7 +7,7 @@ from wallets.models import Wallet
 class WalletViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = {
+        cls.user_data = {
             "username": "testando",
             "email": "teste@mail.com",
             "password": "1234",
@@ -18,13 +18,13 @@ class WalletViewTest(APITestCase):
         }
         cls.wallet = {
             "name": "testecoin",
-            "asset_ticket": "TST",
+            "asset_ticket": "BTC",
         }
-        cls.person = User.objects.create_user(**cls.user)
-        cls.person_token = Token.objects.get_or_create(user=cls.person)
+        cls.user = User.objects.create_user(**cls.user_data)
+        cls.user_token = Token.objects.get_or_create(user=cls.user)
 
     def test_create_wallet(self):
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.person_token[0]}")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user_token[0]}")
         response = self.client.post("/api/wallets/", self.wallet, format="json")
         self.assertEqual(201, response.status_code)
 
