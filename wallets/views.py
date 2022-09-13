@@ -50,7 +50,10 @@ class SubTotalWalletView(APIView):
             DataCrypto.get(crypto=wallet.asset_ticket)["price_actual"]
         )
 
-        data = {"sub_total": quantity * crypto_quotation}
+        data = {
+            "wallet_value": quantity * crypto_quotation,
+            "crypto_quantity": quantity,
+        }
 
         sub_total_serialized = WalletSerializer(wallet, data=data, partial=True)
 
