@@ -14,15 +14,14 @@ from .permissions import IsOwnerWallet
 class WalletView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-
     serializer_class = WalletSerializer
-    queryset = Wallet.objects.all()
 
-    lookup_url_kwarg = "wallet_id"
+    def get_queryset(self):
+        return Wallet.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
 
-        crypto_is_valid = DataCrypto.get(crypto=self.request.data["asset_ticket"])
+        DataCrypto.get(crypto=self.request.data["asset_ticket"])
 
         serializer.save(user=self.request.user)
 
