@@ -8,6 +8,8 @@ from transactions.api_data import DataCrypto
 from wallets.models import Wallet
 from wallets.serializers import WalletSerializer
 
+from .permissions import IsOwnerWallet
+
 
 class WalletView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
@@ -26,26 +28,34 @@ class WalletView(generics.ListCreateAPIView):
 
 
 class SubTotalWalletView(APIView):
-    ...
-#     def get(self, req: Request, wallet_id) -> Response:
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsOwnerWallet]
 
-#         wallet = get_object_or_404(Wallet, pk=wallet_id)
-#         serialized = WalletSerializer(wallet)
+    def get(self, req: Request, wallet_id) -> Response:
 
-#         quantity = sum(
-#             [float(item["quantity"]) for item in serialized.data["transactions"]]
-#         )
+        wallet = get_object_or_404(Wallet, pk=wallet_id)
+        serialized = WalletSerializer(wallet)
+        self.check_object_permissions(req, obj=serialized.data)
 
-#         crypto_quotation = float(
-#             DataCrypto.get(crypto=wallet.asset_ticket)["price_actual"]
-#         )
+        quantity = sum(
+            [
+                float(item["quantity"])
+                if item["exchange"] == "buy"
+                else -float(item["quantity"])
+                for item in serialized.data["transactions"]
+            ]
+        )
 
-#         data = {"value": quantity * crypto_quotation}
+        crypto_quotation = float(
+            DataCrypto.get(crypto=wallet.asset_ticket)["price_actual"]
+        )
 
-#         sub_total_serialized = WalletSerializer(wallet, data=data, partial=True)
+        data = {"sub_total": quantity * crypto_quotation}
 
-#         sub_total_serialized.is_valid(raise_exception=True)
+        sub_total_serialized = WalletSerializer(wallet, data=data, partial=True)
 
-#         sub_total_serialized.save()
+        sub_total_serialized.is_valid(raise_exception=True)
 
-#         return Response(sub_total_serialized.data, status.HTTP_200_OK)
+        sub_total_serialized.save()
+
+        return Response(sub_total_serialized.data, status.HTTP_200_OK)
