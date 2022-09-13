@@ -1,10 +1,10 @@
+from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import serializers
 from transactions.api_data import DataCrypto
 from transactions.models import Transaction
 from transactions.serializers import TransactionsSerializer
-from django.shortcuts import get_object_or_404, get_list_or_404
-
 from users.serializers import UserSerializer
+
 from .models import Wallet
 
 
@@ -34,14 +34,3 @@ class WalletSerializer(serializers.ModelSerializer):
         wallet = Wallet.objects.create(**validated_data)
 
         return wallet
-
-    # def update(self, instance, validated_data):
-
-    #     print(instance.sub_total)
-    #     print(validated_data)
-    #     instance.sub_total = validated_data
-
-    #     # instance.is_valid(raise_exception=True)
-    #     # instance.save()
-
-    #     return instance
