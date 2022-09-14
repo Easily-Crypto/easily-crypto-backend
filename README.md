@@ -14,6 +14,10 @@ Uma api para os amantes de criptomoedas, antes de arriscar, aprenda mais com a g
 
 [API](https://easily-crypto-api.herokuapp.com/)
 
+## Link da nossa documentação
+
+[DOCUMENTAÇÃO](https://easily-crypto-api.herokuapp.com/api/documentation/)
+
 ## Rodando localmente
 
 Clone o projeto
