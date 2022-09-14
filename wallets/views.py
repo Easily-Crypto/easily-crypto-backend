@@ -4,6 +4,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Request, Response, status
 from transactions.api_data import DataCrypto
+from transactions.serializers import AssetNotExistError
 
 from wallets.models import Wallet
 from wallets.serializers import WalletSerializer
@@ -20,8 +21,6 @@ class WalletView(generics.ListCreateAPIView):
         return Wallet.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-
-        DataCrypto.get(crypto=self.request.data["asset_ticket"])
 
         serializer.save(user=self.request.user)
 
