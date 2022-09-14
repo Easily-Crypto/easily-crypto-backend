@@ -17,7 +17,6 @@ class WalletSerializer(serializers.ModelSerializer):
         data = DataCrypto.get(crypto=validated_data["asset_ticket"])
         if data:
             wallet = Wallet.objects.create(**validated_data)
-
             return wallet
         else:
            raise serializers.ValidationError({"error":f"The {validated_data['asset_ticket']} not exist in API database."})

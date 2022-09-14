@@ -14,10 +14,9 @@ class DataCrypto:
     @classmethod
     def get(cls, crypto="BTC"):
         url = f'https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol={crypto}&market=BRL&interval=1min&apikey={os.getenv("API_KEY")}'
-        # try:
-
         r = requests.get(url)
         data = r.json()
+
         if len(data) > 1:
             price_actual = [item for item in data["Time Series Crypto (1min)"].items()][
                 0
@@ -31,6 +30,3 @@ class DataCrypto:
             return obj_for_api
         else:
             return False
-
-        # except data['information']:
-        #     raise AssetTicketNotExist(f"The {crypto} not exist in API database.")
