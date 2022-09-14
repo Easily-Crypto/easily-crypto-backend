@@ -1,14 +1,15 @@
 # Easily Crypto API
 
-Uma api para os amantes de criptomoedas, antes de arriscar, aprenda mais com a gente!
+A API simula uma fintech de compra e venda de criptoativos, com cotação atualizada de diversas criptomoedas. Esta é uma maneira simples e descomplicada para acompanhar e compreender o mercado antes de se arriscar no mundo das moedas em blockchain!
 
 ## Funcionalidades
 
 - Criação, edição e deleção de usuários
 - Criação, edição e deleção de endereços
 - Criação de carteiras (Wallets)
-- Criação de transações para sua carteira criada
-- Exibição de sua carteira com as transações feitas
+- Cotação de criptomoedas em tempo real
+- Simulação de compra e venda para cada carteira criada
+- Exibição de extato de cada carteira com suas respectivas transações
 
 ## Link da nossa api
 
